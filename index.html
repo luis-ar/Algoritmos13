@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Tabla Hash</h1>
+    <div class="contenedorMadre">
+      <div class="contenedor1">
+        <form id="hashForm">
+          <label for="keyInput">Clave:</label>
+          <input type="text" id="keyInput" placeholder="Ingrese una clave" />
+
+          <label for="valueInput">Valor:</label>
+          <input type="text" id="valueInput" placeholder="Ingrese un valor" />
+
+          <button class="botonInsertar" type="submit">Insertar</button>
+        </form>
+      </div>
+      <div class="contenedor2">
+        <table id="tabla-empleados">
+          <thead>
+            <tr>
+              <th>Indice</th>
+              <th>Clave</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody class="llenar-datos"></tbody>
+        </table>
+      </div>
+      <div class="contenedor3">
+        <form id="hashForm" class="formularioBuscar">
+          <label for="keyInput">Clave:</label>
+          <input type="text" id="keyInput" class="keyClave" placeholder="Ingrese una clave" />
+          <button class="botonInsertar" type="submit">Buscar</button>
+          <table id="tabla-empleados buscarTabla">
+            <thead>
+              <tr>
+                <th>Indice</th>
+                <th>Clave</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody class="llenar-datos llenaBuscar"></tbody>
+          </table>
+        </form>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
