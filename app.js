@@ -10,35 +10,35 @@ const formularioBuscar = document.querySelector(".formularioBuscar");
 const keyClave = document.querySelector(".keyClave");
 // Definir la clase HashTable
 class HashTable {
+  //definir el valor constante
+  constante = Math.random();
   constructor() {
     this.buckets = {};
   }
 
-  // Función hash (djb2)
-  hash(key) {
-    let hash = 0.6183;
-    let paso1 = key * hash;
+  // Función hash: se va a usar el metodo de la multiplicacion para calcular el indice de cada valor introducido
+  hash(claveIntroducidaTeclado) {
+    console.log(this.constante);
+    let paso1 = claveIntroducidaTeclado * this.constante;
     let paso2 = Math.trunc((paso1 - Math.trunc(paso1)) * 100);
     return paso2.toString();
   }
 
-  // Insertar un par clave-valor en la tabla hash
-  insert(key, value) {
-    const hashKey = this.hash(key);
-    let clave = key;
-    this.buckets[hashKey] = { value, clave };
+  // Insertar la clave-valor en la tabla hash para luego almacenar en un arreglo en la posicion segun el valor que nos retorna la funcion hash
+  insert(claveIntroducidaTeclado, valorIntroducido) {
+    const indiceObtenido = this.hash(claveIntroducidaTeclado);
+    let clave = claveIntroducidaTeclado;
+    this.buckets[indiceObtenido] = { valorIntroducido, clave };
   }
 
-  // Obtener el valor asociado a una clave
-  get(key) {
-    const hashKey = this.hash(key);
-    const valores = this.buckets[hashKey] || null;
+  // Obtener el valor asociado a una clave, se encuentra el valor que relaciona con la clave que se esta buscando
+  get(claveIntroducidaTeclado) {
+    const indiceObtenido = this.hash(claveIntroducidaTeclado);
+    const valores = this.buckets[indiceObtenido] || null;
     return {
       valores,
-      hashKey,
+      indiceObtenido,
     };
-
-    // return this.buckets[hashKey] || null;
   }
 }
 
@@ -47,31 +47,31 @@ const myHashTable = new HashTable();
 
 // Manejar el envío del formulario
 hashForm.addEventListener("submit", function (event) {
-  event.preventDefault(); // Evitar que se recargue la página
+  event.preventDefault(); // Evitar que se recargue la página al presionar el boton de insertar
 
-  const key = keyInput.value;
-  const value = valueInput.value;
+  const claveTeclado = keyInput.value;
+  const valorTeclado = valueInput.value;
 
-  myHashTable.insert(key, value);
+  myHashTable.insert(claveTeclado, valorTeclado);
 
   keyInput.value = "";
   valueInput.value = "";
-
+  //mostar lo guardado en la tabla
   showOutput();
 });
 
-// Mostrar la salida actual de la tabla hash
+// funcion para mostrar la salida actual de la tabla hash
 function showOutput() {
   llenarDatos.innerHTML = "";
 
   for (let key in myHashTable.buckets) {
-    const { value, clave } = myHashTable.buckets[key];
+    const { valorIntroducido, clave } = myHashTable.buckets[key];
     const fila = document.createElement("tr");
 
     fila.innerHTML = `
     <td>${key}</td>
     <td>${clave}</td>
-    <td>${value}</td>
+    <td>${valorIntroducido}</td>
     
   `;
 
@@ -83,16 +83,16 @@ function showOutput() {
 formularioBuscar.addEventListener("submit", function (event) {
   event.preventDefault(); // Evitar que se recargue la página
 
-  const key = keyClave.value;
-  const { valores, hashKey } = myHashTable.get(key);
-  const { value, clave } = valores;
+  const claveTeclado = keyClave.value;
+  const { valores, indiceObtenido } = myHashTable.get(claveTeclado);
+  const { valorIntroducido, clave } = valores;
   keyClave.value = "";
 
   const fila = document.createElement("tr");
   fila.innerHTML += `
-                      <td>${hashKey}</td>
+                      <td>${indiceObtenido}</td>
                       <td>${clave}</td>
-                      <td>${value}</td>
+                      <td>${valorIntroducido}</td>
                     `;
   llenaBuscar.appendChild(fila);
 });
