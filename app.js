@@ -20,15 +20,20 @@ class HashTable {
   // Función hash: se va a usar el metodo de la multiplicacion para calcular el indice de cada valor introducido
   hash(claveIntroducidaTeclado) {
     console.log(this.constante);
+    //se multiplica la clave introducida por la constante que se calcula aleatoriamente
     let paso1 = claveIntroducidaTeclado * this.constante;
+    //luego se trunca el valor obtenido se toma la parte decimal y se multiplica por 100
     let paso2 = Math.trunc((paso1 - Math.trunc(paso1)) * 100);
+    //luego se retorna el valor obtenido el cual representa el indice que va a tener relacion con nuestro valor que se introducio por teclado
     return paso2.toString();
   }
 
   // Insertar la clave-valor en la tabla hash para luego almacenar en un arreglo en la posicion segun el valor que nos retorna la funcion hash
   insert(claveIntroducidaTeclado, valorIntroducido) {
+    //se calcular el indice segun la clave que se introdujo port teclado
     const indiceObtenido = this.hash(claveIntroducidaTeclado);
     let clave = claveIntroducidaTeclado;
+    //almacenar el valor introducio y la clave en el arreglo de buckets segun el indice que nos salio en la funcion hash
     this.buckets[indiceObtenido] = { valorIntroducido, clave };
   }
 
@@ -36,6 +41,7 @@ class HashTable {
   get(claveIntroducidaTeclado) {
     const indiceObtenido = this.hash(claveIntroducidaTeclado);
     const valores = this.buckets[indiceObtenido] || null;
+    //retorna los valores encontrados segun la clave que se introdujo
     return {
       valores,
       indiceObtenido,
@@ -76,7 +82,7 @@ function showOutput() {
     <td>${valorIntroducido}</td>
     
   `;
-
+    //añade un nuevo dato a la tabla
     llenarDatos.appendChild(fila);
   }
 }
